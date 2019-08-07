@@ -1,1 +1,0 @@
-# tanium-centos

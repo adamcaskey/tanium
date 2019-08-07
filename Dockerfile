@@ -13,12 +13,12 @@ ENV ServerNameList=${ServerNameList}
 ENV LogVerbosityLevel=${LogVerbosityLevel}
 
 RUN curl -k -o /tmp/taniumclient.rpm -L "${TaniumRPMFile}" && rpm -i /tmp/taniumclient.rpm && yum clean all && curl -k -o /opt/Tanium/TaniumClient/tanium.pub -L "${TaniumPubFile}";
-RUN /opt/Tanium/TaniumClient/TaniumClient config set ServerNameList "${ServerNameList}";
-RUN /opt/Tanium/TaniumClient/TaniumClient config set LogVerbosityLevel "${LogVerbosityLevel}";
+RUN /opt/Tanium/TaniumClient/TaniumClient config set ServerNameList ${ServerNameList};
+RUN /opt/Tanium/TaniumClient/TaniumClient config set LogVerbosityLevel ${LogVerbosityLevel};
 RUN systemctl enable taniumclient.service;
 
 EXPOSE 17472
 
-CMD /opt/Tanium/TaniumClient/TaniumClient config set ServerNameList "${ServerNameList}";
-CMD /opt/Tanium/TaniumClient/TaniumClient config set LogVerbosityLevel "${LogVerbosityLevel}";
-CMD /opt/Tanium/TaniumClient/TaniumClient && sleep 5 && tail -f /opt/Tanium/TaniumClient/Logs/log0.txt
+CMD /opt/Tanium/TaniumClient/TaniumClient config set ServerNameList "${ServerNameList}" && \
+ /opt/Tanium/TaniumClient/TaniumClient config set LogVerbosityLevel "${LogVerbosityLevel}" && \
+ /opt/Tanium/TaniumClient/TaniumClient && sleep 5 && tail -f /opt/Tanium/TaniumClient/Logs/log0.txt
